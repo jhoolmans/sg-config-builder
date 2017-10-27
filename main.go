@@ -45,6 +45,16 @@ type Environment struct {
 	Frameworks  []string
 }
 
+/*Templates represents the templates document holding all the
+global templates. Keys are mapped to interface{} since they
+can be a string, map, or even a map of maps. Same with Paths.
+*/
+type Templates struct {
+	Keys    map[string]interface{}
+	Paths   map[string]interface{}
+	Strings map[string]string
+}
+
 func main() {
 	fmt.Println("------\nConfig Builder\n------")
 
@@ -77,18 +87,27 @@ func main() {
 	}
 
 	// Named locations (eg. tk-maya)
-	var l map[string]Location
+	var nl map[string]Location
 
-	err = yaml.Unmarshal(data, &l)
+	err = yaml.Unmarshal(data, &nl)
 	if err != nil {
 		log.Fatalf("Could not read yaml document: %v", err)
 	}
 
-	fmt.Printf("--- Locations:\n%v\n\n", l)
+	fmt.Printf("--- Locations:\n%v\n\n", nl)
+
+	//
+	// LocationStore
+	store := NewLocationStore("engines")
+	for _, l := range nl {
+		store.addLocation(l)
+	}
+
+	fmt.Printf("--- Location store:\n%v:\n%v\n\n", store.path(), store)
 
 	//
 	// Now print them back out like we read them
-	d, err = yaml.Marshal(&l)
+	d, err = yaml.Marshal(&store.Locations)
 	if err != nil {
 		log.Fatalf("Error converting to yaml: %v", err)
 	}
