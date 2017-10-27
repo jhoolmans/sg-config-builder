@@ -56,7 +56,7 @@ func main() {
 
 	//
 	// Example of loading an engines yaml file
-	data, err := ioutil.ReadFile("yaml_files/engines.yml")
+	data, err := ioutil.ReadFile("yaml_files/engine-locations.yml")
 	if err != nil {
 		log.Fatalf("Could not read file: %v", err)
 	}
@@ -80,7 +80,7 @@ func main() {
 
 	fmt.Println("Output:\n", string(d))
 
-	err = ioutil.WriteFile("yaml_files/engines-output.yml", d, 0777)
+	err = ioutil.WriteFile("yaml_files/engine-locations-output.yml", d, 0777)
 	if err != nil {
 		log.Fatalf("Failed to write file: %v", err)
 	}
