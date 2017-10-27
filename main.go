@@ -13,7 +13,8 @@ engines. It stores information such as the source location and
 configuration specific for a context.
 */
 type App struct {
-	Location Location
+	location    Location
+	LocationRef string `yaml:"location"`
 }
 
 /*Engine represents a dcc application with shotgun configurations.
@@ -21,14 +22,28 @@ Most importantly in a pipeline configuration this will also hold the
 source location of this engine.
 */
 type Engine struct {
-	Location      Location
+	location      Location
+	LocationRef   string `yaml:"location"`
 	Apps          map[string]App
 	Configuration map[string]interface{}
 }
 
-/*Engines represents multiple Engine objects.
- */
-type Engines []Engine
+/*Includes represents a list of files relative to itself.
+Every yaml document is able to include different yaml documents.
+*/
+type Includes map[string]string
+
+/*Environment is a single environment that controls the engines
+available and it's configuration. This means we can have several
+engines that have the same location and configurations, but they
+are part of different environments.
+*/
+type Environment struct {
+	name        string
+	Description string
+	Engines     []Engine
+	Frameworks  []string
+}
 
 func main() {
 	fmt.Println("------\nConfig Builder\n------")
@@ -42,7 +57,7 @@ func main() {
 		Path:         "https://github.com/shotgunsoftware/tk-maya.git",
 	}
 	mayaEngine := Engine{
-		Location: mayaLocation,
+		location: mayaLocation,
 	}
 
 	// Dump the mayaEngine formatted as yaml
@@ -61,7 +76,7 @@ func main() {
 		log.Fatalf("Could not read file: %v", err)
 	}
 
-	// Named locations (eg. common.engines.tk-maya.location)
+	// Named locations (eg. tk-maya)
 	var l map[string]Location
 
 	err = yaml.Unmarshal(data, &l)
