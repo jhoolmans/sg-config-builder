@@ -1,0 +1,36 @@
+common.engines.tk-3dsmaxplus.location:
+  version: v0.4.1
+  type: app_store
+  name: tk-3dsmaxplus
+common.engines.tk-desktop.location:
+  version: v2.3.10
+  type: app_store
+  name: tk-desktop
+common.engines.tk-flame.location:
+  version: v1.10.0
+  type: app_store
+  name: tk-flame
+common.engines.tk-houdini.location:
+  version: v1.2.7
+  type: app_store
+  name: tk-houdini
+common.engines.tk-maya.location:
+  version: v0.8.3
+  type: app_store
+  name: tk-maya
+common.engines.tk-nuke.location:
+  version: v0.8.5
+  type: app_store
+  name: tk-nuke
+common.engines.tk-photoshopcc.location:
+  version: v1.1.7
+  type: app_store
+  name: tk-photoshopcc
+common.engines.tk-shell.location:
+  version: v0.5.4
+  type: app_store
+  name: tk-shell
+common.engines.tk-shotgun.location:
+  version: v0.6.0
+  type: app_store
+  name: tk-shotgun
