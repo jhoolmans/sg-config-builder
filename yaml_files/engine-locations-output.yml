@@ -16,8 +16,9 @@ locations.engines.tk-houdini.location:
   name: tk-houdini
 locations.engines.tk-maya.location:
   version: v0.8.3
-  type: app_store
+  type: git
   name: tk-maya
+  path: https://github.com/shotgunsoftware/tk-maya.git
 locations.engines.tk-nuke.location:
   version: v0.8.5
   type: app_store
