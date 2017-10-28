@@ -14,7 +14,7 @@ func TestLocationMarshal(t *testing.T) {
 	ml := Location{
 		Version:      "v0.8.3",
 		LocationType: "git",
-		Name:         "tk-maya",
+		Name_:        "tk-maya",
 		Path:         "https://github.com/shotgunsoftware/tk-maya.git",
 	}
 
@@ -40,7 +40,7 @@ func TestLocationMarshal(t *testing.T) {
 	appstore := Location{
 		Version:      "v0.1.0",
 		LocationType: "app_store",
-		Name:         "tk-maya",
+		Name_:        "tk-maya",
 	}
 
 	// Dump the mayaEngine formatted as yaml
@@ -60,20 +60,20 @@ func TestLocationName(t *testing.T) {
 		Version:      "v1.0.0b",
 		LocationType: "app_store",
 	}
-	if loc.name() != "unknown" {
-		t.Errorf("Expected loc.name to be 'unknown', it's '%v' instead.", loc.name())
+	if loc.Name() != "unknown" {
+		t.Errorf("Expected loc.name to be 'unknown', it's '%v' instead.", loc.Name())
 	}
 
 	// Override (app) location name
-	loc.Name = "Hallo"
-	if loc.name() != "Hallo" {
-		t.Errorf("Expected loc.name to be 'Hallo', it's '%v' instead.", loc.name())
+	loc.Name_ = "Hallo"
+	if loc.Name() != "Hallo" {
+		t.Errorf("Expected loc.name to be 'Hallo', it's '%v' instead.", loc.Name())
 	}
 
 	// Set refName to be used when printing in Yaml
 	loc.refName = "Hoi"
-	if loc.name() != "Hoi" {
-		t.Errorf("Expected loc.name to be 'Hoi', it's '%v' instead.", loc.name())
+	if loc.Name() != "Hoi" {
+		t.Errorf("Expected loc.name to be 'Hoi', it's '%v' instead.", loc.Name())
 	}
 }
 
@@ -104,10 +104,10 @@ func TestLocationStoreMarshal(t *testing.T) {
 	// LocationStore
 	store := NewLocationStore("engines")
 	for _, l := range nl {
-		store.addLocation(l)
+		store.AddLocation(l)
 	}
 
-	if store.path() != "env/locations/engines.yml" {
+	if store.Path() != "env/locations/engines.yml" {
 		t.Error("Invalid store path.")
 	}
 

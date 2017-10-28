@@ -9,16 +9,16 @@ type Location struct {
 	refName      string
 	Version      string
 	LocationType string `yaml:"type"`
-	Name         string `yaml:"name,omitempty"`
+	Name_        string `yaml:"name,omitempty"`
 	Path         string `yaml:"path,omitempty"`
 }
 
-func (l *Location) name() string {
+func (l *Location) Name() string {
 	if l.refName != "" {
 		return l.refName
 	}
-	if l.Name != "" {
-		return l.Name
+	if l.Name_ != "" {
+		return l.Name_
 	}
 	return "unknown"
 }
@@ -30,16 +30,16 @@ type LocationStore struct {
 	Locations map[string]Location
 }
 
-func (ls *LocationStore) namespace() string {
+func (ls *LocationStore) Namespace() string {
 	return fmt.Sprintf("locations.%s", ls.name)
 }
 
-func (ls *LocationStore) path() string {
+func (ls *LocationStore) Path() string {
 	return fmt.Sprintf("env/locations/%s.yml", ls.name)
 }
 
-func (ls *LocationStore) addLocation(l Location) {
-	locationName := fmt.Sprintf("%s.%s.location", ls.namespace(), l.name())
+func (ls *LocationStore) AddLocation(l Location) {
+	locationName := fmt.Sprintf("%s.%s.location", ls.Namespace(), l.Name())
 	l.refName = locationName
 	ls.Locations[locationName] = l
 }
