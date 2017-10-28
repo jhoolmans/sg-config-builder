@@ -27,10 +27,16 @@ func (e *Environment) Path() string {
 
 /*Include includes a location
  */
-func (e *Environment) Include(ls LocationStore) string {
+func (e *Environment) Include(ls LocationStore) {
 	val, err := filepath.Rel(e.Path(), ls.Path())
 	if err != nil {
 		log.Fatal(err)
 	}
-	return val
+
+	for _, b := range e.Includes {
+		if b == val {
+			return
+		}
+	}
+	e.Includes = append(e.Includes, val)
 }
