@@ -9,7 +9,7 @@ type Location struct {
 	refName      string
 	Version      string
 	LocationType string `yaml:"type"`
-	Name_        string `yaml:"name,omitempty"`
+	LocationName string `yaml:"name,omitempty"`
 	Path         string `yaml:"path,omitempty"`
 }
 
@@ -17,8 +17,8 @@ func (l *Location) Name() string {
 	if l.refName != "" {
 		return l.refName
 	}
-	if l.Name_ != "" {
-		return l.Name_
+	if l.LocationName != "" {
+		return l.LocationName
 	}
 	return "unknown"
 }
@@ -27,18 +27,27 @@ func (l *Location) Name() string {
  */
 type LocationStore struct {
 	name      string
-	Locations map[string]Location
+	Locations map[string]*Location
 }
 
+/*Namespace returns a prefix used for keys inside the LocationStore.
+This allow for readability when included.
+*/
 func (ls *LocationStore) Namespace() string {
 	return fmt.Sprintf("locations.%s", ls.name)
 }
 
+/*Path returns a relative path based on where it's executed. Running
+the commands from $HOME will result in $HOME/env/locations/`name`.yml.
+*/
 func (ls *LocationStore) Path() string {
 	return fmt.Sprintf("env/locations/%s.yml", ls.name)
 }
 
-func (ls *LocationStore) AddLocation(l Location) {
+/*AddLocation adds the given location to the Locations map and renames
+the location with a prefix and suffix.
+*/
+func (ls *LocationStore) AddLocation(l *Location) {
 	locationName := fmt.Sprintf("%s.%s.location", ls.Namespace(), l.Name())
 	l.refName = locationName
 	ls.Locations[locationName] = l
@@ -48,6 +57,6 @@ func (ls *LocationStore) AddLocation(l Location) {
  */
 func NewLocationStore(name string) LocationStore {
 	ls := LocationStore{name: name}
-	ls.Locations = make(map[string]Location)
+	ls.Locations = make(map[string]*Location)
 	return ls
 }

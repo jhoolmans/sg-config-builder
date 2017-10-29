@@ -14,7 +14,7 @@ func TestLocationMarshal(t *testing.T) {
 	ml := Location{
 		Version:      "v0.8.3",
 		LocationType: "git",
-		Name_:        "tk-maya",
+		LocationName: "tk-maya",
 		Path:         "https://github.com/shotgunsoftware/tk-maya.git",
 	}
 
@@ -40,7 +40,7 @@ func TestLocationMarshal(t *testing.T) {
 	appstore := Location{
 		Version:      "v0.1.0",
 		LocationType: "app_store",
-		Name_:        "tk-maya",
+		LocationName: "tk-maya",
 	}
 
 	// Dump the mayaEngine formatted as yaml
@@ -65,7 +65,7 @@ func TestLocationName(t *testing.T) {
 	}
 
 	// Override (app) location name
-	loc.Name_ = "Hallo"
+	loc.LocationName = "Hallo"
 	if loc.Name() != "Hallo" {
 		t.Errorf("Expected loc.name to be 'Hallo', it's '%v' instead.", loc.Name())
 	}
@@ -104,7 +104,7 @@ func TestLocationStoreMarshal(t *testing.T) {
 	// LocationStore
 	store := NewLocationStore("engines")
 	for _, l := range nl {
-		store.AddLocation(l)
+		store.AddLocation(&l)
 	}
 
 	if store.Path() != "env/locations/engines.yml" {

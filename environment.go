@@ -15,8 +15,19 @@ type Environment struct {
 	name        string
 	Includes    []string `yaml:"includes,omitempty"`
 	Description string
-	Engines     []Engine
+	Engines     map[string]Engine
 	Frameworks  []string `yaml:"frameworks,omitempty"`
+}
+
+/*NewEnvironment returns a new Environment object. This func takes
+care of the initialization of it's members.
+*/
+func NewEnvironment(name string) Environment {
+	e := Environment{
+		name: name,
+	}
+	e.Engines = make(map[string]Engine)
+	return e
 }
 
 /*Path returns the path of the named environment.
