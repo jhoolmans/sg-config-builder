@@ -93,9 +93,17 @@ func main() {
 	projectEnv.Engines[mayaEngine.name] = mayaEngine
 	projectEnv.Engines[nukeEngine.name] = nukeEngine
 
+	fmt.Println(eStore.Path(), "\n------")
+
+	d, err := yaml.Marshal(eStore.Locations)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(string(d))
+
 	fmt.Println(projectEnv.Path(), "\n-------")
 
-	d, err := yaml.Marshal(projectEnv)
+	d, err = yaml.Marshal(projectEnv)
 	if err != nil {
 		log.Fatal(err)
 	}
