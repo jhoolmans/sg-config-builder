@@ -17,6 +17,10 @@ type Location struct {
 	Path         string `yaml:"path,omitempty"`
 }
 
+/*Name returns the reference name for the location. It prioritizes the
+refName attribute over LocationName. LocationName is still used by the
+LocationStore to update it's refName.
+*/
 func (l *Location) Name() string {
 	if l.refName != "" {
 		return l.refName
