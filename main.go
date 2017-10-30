@@ -7,46 +7,6 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-/*App represents a single tool which belongs to a single or multiple
-engines. It stores information such as the source location and
-configuration specific for a context.
-*/
-type App struct {
-	location    Location
-	LocationRef string `yaml:"location"`
-}
-
-/*Engine represents a dcc application with shotgun configurations.
-Most importantly in a pipeline configuration this will also hold the
-source location of this engine.
-*/
-type Engine struct {
-	name          string
-	location      Location
-	LocationRef   string `yaml:"location"`
-	Apps          map[string]App
-	configuration map[string]interface{}
-}
-
-/*SetLocation sets the Location and creates the proper reference.
-Not that this should be called _after_ the location has been added
-to the LocationStore to get the right reference link.
-*/
-func (e *Engine) SetLocation(l *Location) {
-	e.location = *l
-	e.LocationRef = "@" + l.Name()
-}
-
-/*Templates represents the templates document holding all the
-global templates. Keys are mapped to interface{} since they
-can be a string, map, or even a map of maps. Same with Paths.
-*/
-type Templates struct {
-	Keys    map[string]interface{}
-	Paths   map[string]interface{}
-	Strings map[string]string
-}
-
 func main() {
 	fmt.Println("------\nConfig Builder\n------")
 
@@ -99,7 +59,7 @@ func main() {
 
 	fmt.Println(eStore.Path(), "\n------")
 
-	d, err := yaml.Marshal(eStore.Locations)
+	d, err := eStore.ToYaml()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -107,9 +67,9 @@ func main() {
 
 	fmt.Println(projectEnv.Path(), "\n-------")
 
-	d, err = yaml.Marshal(projectEnv)
+	m, err := yaml.Marshal(projectEnv)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(string(d))
+	fmt.Println(string(m))
 }

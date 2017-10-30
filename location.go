@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	yaml "gopkg.in/yaml.v2"
+)
 
 /*Location is the source location of a shotgun managed tool. There are
 several valid types to choose from, such as git, git_branch, app_store,
@@ -51,6 +55,13 @@ func (ls *LocationStore) AddLocation(l *Location) {
 	locationName := fmt.Sprintf("%s.%s.location", ls.Namespace(), l.Name())
 	l.refName = locationName
 	ls.Locations[locationName] = l
+}
+
+/*ToYaml returns a valid yaml output for Shotgun.
+ */
+func (ls *LocationStore) ToYaml() (string, error) {
+	d, err := yaml.Marshal(&ls.Locations)
+	return string(d), err
 }
 
 /*NewLocationStore initializes a new LocationStore object.

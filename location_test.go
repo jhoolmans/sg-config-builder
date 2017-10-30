@@ -117,7 +117,7 @@ func TestLocationStoreMarshal(t *testing.T) {
 
 	//
 	// Marshal LocationStore
-	d, err := yaml.Marshal(&store.Locations)
+	d, err := store.ToYaml()
 	if err != nil {
 		t.Errorf("Error converting store.Locations to yaml: %v", err)
 	}
