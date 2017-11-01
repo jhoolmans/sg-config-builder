@@ -30,6 +30,12 @@ func NewEnvironment(name string) Environment {
 	return e
 }
 
+/*AddEngine adds an engine by the name of the supplied engine.
+ */
+func (e *Environment) AddEngine(engine *Engine) {
+	e.Engines[engine.name] = *engine
+}
+
 /*Path returns the path of the named environment.
  */
 func (e *Environment) Path() string {

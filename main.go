@@ -22,13 +22,8 @@ func main() {
 	eStore := NewLocationStore("engines")
 	aStore := NewLocationStore("apps")
 
-	projectEnv := NewEnvironment("project")
-	projectEnv.Description = "Apps and Engines when launching with a project only context."
-
-	projectEnv.Include(eStore)
-	projectEnv.Include(aStore)
-
 	// Engine locations
+	//
 	mayaLocation := Location{
 		LocationName: "tk-maya",
 		Version:      "v1.0.0",
@@ -44,6 +39,7 @@ func main() {
 	eStore.AddLocation(&nukeLocation)
 
 	// Add some engines to play with
+	//
 	mayaEngine := Engine{
 		name: "tk-maya",
 	}
@@ -54,8 +50,15 @@ func main() {
 	}
 	nukeEngine.SetLocation(&nukeLocation)
 
-	projectEnv.Engines[mayaEngine.name] = mayaEngine
-	projectEnv.Engines[nukeEngine.name] = nukeEngine
+	// Assemble environment
+	projectEnv := NewEnvironment("project")
+	projectEnv.Description = "Apps and Engines when launching with a project only context."
+
+	projectEnv.Include(eStore)
+	projectEnv.Include(aStore)
+
+	projectEnv.AddEngine(&mayaEngine)
+	projectEnv.AddEngine(&nukeEngine)
 
 	fmt.Println(eStore.Path(), "\n------")
 
