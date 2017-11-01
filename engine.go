@@ -12,6 +12,21 @@ type Engine struct {
 	configuration map[string]interface{}
 }
 
+/*NewEngine constructs an Engine based on a location. It can be renamed
+after building. If not, it will default to the location's name.
+*/
+func NewEngine(l *Location) Engine {
+	e := Engine{}
+	e.name = l.LocationName
+
+	e.Apps = make(map[string]App)
+	e.configuration = make(map[string]interface{})
+
+	// Set location as usual
+	e.SetLocation(l)
+	return e
+}
+
 /*SetLocation sets the Location and creates the proper reference.
 Not that this should be called _after_ the location has been added
 to the LocationStore to get the right reference link.

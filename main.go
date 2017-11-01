@@ -40,15 +40,8 @@ func main() {
 
 	// Add some engines to play with
 	//
-	mayaEngine := Engine{
-		name: "tk-maya",
-	}
-	mayaEngine.SetLocation(&mayaLocation)
-
-	nukeEngine := Engine{
-		name: "tk-nuke",
-	}
-	nukeEngine.SetLocation(&nukeLocation)
+	mayaEngine := NewEngine(&mayaLocation)
+	nukeEngine := NewEngine(&nukeLocation)
 
 	// Assemble environment
 	projectEnv := NewEnvironment("project")
