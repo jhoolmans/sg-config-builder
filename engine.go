@@ -7,7 +7,7 @@ source location of this engine.
 type Engine struct {
 	name          string
 	location      Location
-	LocationRef   string `yaml:"location"`
+	LocationRef   string `json:"location"`
 	Apps          map[string]App
 	configuration map[string]interface{}
 }

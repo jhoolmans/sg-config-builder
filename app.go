@@ -6,5 +6,5 @@ configuration specific for a context.
 */
 type App struct {
 	location    Location
-	LocationRef string `yaml:"location"`
+	LocationRef string `json:"location"`
 }

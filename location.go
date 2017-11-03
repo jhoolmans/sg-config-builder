@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	yaml "gopkg.in/yaml.v2"
+	"github.com/ghodss/yaml"
 )
 
 /*Location is the source location of a shotgun managed tool. There are
@@ -12,9 +12,9 @@ dev etc.*/
 type Location struct {
 	refName      string
 	Version      string
-	LocationType string `yaml:"type"`
-	LocationName string `yaml:"name,omitempty"`
-	Path         string `yaml:"path,omitempty"`
+	LocationType string `json:"type"`
+	LocationName string `json:"name,omitempty"`
+	Path         string `json:"path,omitempty"`
 }
 
 /*Name returns the reference name for the location. It prioritizes the

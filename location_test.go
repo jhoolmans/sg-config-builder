@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	yaml "gopkg.in/yaml.v2"
+	"github.com/ghodss/yaml"
 )
 
 func TestLocationMarshal(t *testing.T) {

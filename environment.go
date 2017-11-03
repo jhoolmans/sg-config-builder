@@ -13,10 +13,10 @@ are part of different environments.
 */
 type Environment struct {
 	name        string
-	Includes    []string `yaml:"includes,omitempty"`
+	Includes    []string `json:"includes,omitempty"`
 	Description string
 	Engines     map[string]Engine
-	Frameworks  []string `yaml:"frameworks,omitempty"`
+	Frameworks  []string `json:"frameworks,omitempty"`
 }
 
 /*NewEnvironment returns a new Environment object. This func takes
