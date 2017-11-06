@@ -42,6 +42,15 @@ func env_testing() {
 	mayaEngine := NewEngine(&mayaLocation)
 	nukeEngine := NewEngine(&nukeLocation)
 
+	// extra configuration testing for Engines
+	runAtStartup := make([]map[string]interface{}, 1, 1)
+	runAtStartup[0] = make(map[string]interface{})
+	runAtStartup[0]["app_instance"] = "tk-multi-shotgunpanel"
+	runAtStartup[0]["name"] = ""
+
+	mayaEngine.configuration["automatic_context_switch"] = true
+	mayaEngine.configuration["run_at_startup"] = runAtStartup
+
 	// Assemble environment
 	projectEnv := NewEnvironment("project")
 	projectEnv.Description = "Apps and Engines when launching with a project only context."
@@ -107,4 +116,30 @@ func main() {
 
 	// play with configurations
 	configuration_testing()
+
+	// load engine from file and linking to storage
+	e := Engine{}
+	e.Init()
+	e.name = "tk-maya"
+	// read engine from file
+	inputEngine := "yaml_files/maya-engine.yml"
+	data, err := ioutil.ReadFile(inputEngine)
+	if err != nil {
+		log.Fatal("Could not read file: %v", err)
+	}
+
+	err = yaml.Unmarshal(data, &e)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(e)
+
+	// and back to yaml again
+
+	m, err := yaml.Marshal(e)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("---- marshal:\n\n%v\n", string(m))
+
 }

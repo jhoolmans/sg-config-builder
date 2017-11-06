@@ -12,8 +12,8 @@ type Engine struct {
 	name          string
 	location      Location
 	LocationRef   string `json:"location"`
-	Apps          map[string]App
-	configuration Configuration
+	Apps          map[string]interface{}
+	configuration map[string]interface{}
 }
 
 /*NewEngine constructs an Engine based on a location. It can be renamed
@@ -21,14 +21,17 @@ after building. If not, it will default to the location's name.
 */
 func NewEngine(l *Location) Engine {
 	e := Engine{}
+	e.Init()
 	e.name = l.LocationName
-
-	e.Apps = make(map[string]App)
-	e.configuration = make(Configuration)
 
 	// Set location as usual
 	e.SetLocation(l)
 	return e
+}
+
+func (e *Engine) Init() {
+	e.Apps = make(map[string]interface{})
+	e.configuration = make(map[string]interface{})
 }
 
 /*SetLocation sets the Location and creates the proper reference.
