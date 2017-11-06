@@ -2,14 +2,13 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 
 	"github.com/ghodss/yaml"
 )
 
-func main() {
-	fmt.Println("------\nConfig Builder\n------")
-
+func env_testing() {
 	// Simple Scenario:
 	//  One environment, a project.
 	// two engines: nuke and maya.
@@ -68,4 +67,44 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(string(m))
+}
+
+func configuration_testing() {
+	// Load an arbitrary app-info yaml file and parse the configuration key.
+
+	inputConfiguration := "yaml_files/app-info.yml"
+	data, err := ioutil.ReadFile(inputConfiguration)
+	if err != nil {
+		log.Fatal("Could not read file: %v", err)
+	}
+
+	log.Println(string(data))
+
+	tmp := struct {
+		Configuration Configuration `json:configuration`
+	}{}
+	// Marshal configuration into a configuration struct.
+	err = yaml.Unmarshal(data, &tmp)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("---- raw obj:\n\n%v\n", tmp)
+
+	m, err := yaml.Marshal(tmp)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("---- marshal:\n\n%v\n", string(m))
+
+}
+
+func main() {
+	fmt.Println("------\nConfig Builder\n------")
+
+	// play with environment code.
+	env_testing()
+
+	// play with configurations
+	configuration_testing()
 }

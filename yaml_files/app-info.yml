@@ -1,0 +1,56 @@
+#
+# Example app-info yaml file with different possible option types.
+# Different types have different keys, but some of them are overlapping.
+#
+# type, description and default_value are the base keys to determine a
+# type of setting value.
+#
+configuration:
+
+    bool_setting:
+        type: bool
+        description: Whether to use Shotgun Software Entities to register 
+                     launch commands for available DCCs.
+        default_value: false
+
+    str_setting:
+        type: str
+        description: Name to appear on the Shotgun menu.
+        default_value: ""
+
+    list_of_str:
+        type: list
+        allows_empty: True
+        values:
+            type: str
+        default_value: []
+        description: "A list of (str) versions."
+
+    dict_generic:
+        type: dict
+        description: "Shotgun engine specific extra values. These are defined per Shotgun engine.
+                     Please look in the app documentation for more details."
+        default_value: {}
+
+    hook_setting:
+        type: hook
+        default_value: app_launch
+        description: "Called to launch the application. This hook contains the code that does
+                     the actual execution of the launch command and parameters. If you have 
+                     a custom launcher system in your studio, it can be handy to override 
+                     Tank's default launch behaviour."
+
+    list_of_dict_of_items:
+        type: list
+        description: "List of dict objects with other item types"
+        values:
+            type: dict
+            items:
+                name:
+                    type: str
+                hook:
+                    type: hook
+                settings:
+                    type: dict
+        allows_empty: True
+        default_value: []
