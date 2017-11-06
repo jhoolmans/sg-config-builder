@@ -9,7 +9,7 @@ type Engine struct {
 	location      Location
 	LocationRef   string `json:"location"`
 	Apps          map[string]App
-	configuration map[string]interface{}
+	configuration Configuration
 }
 
 /*NewEngine constructs an Engine based on a location. It can be renamed
@@ -20,7 +20,7 @@ func NewEngine(l *Location) Engine {
 	e.name = l.LocationName
 
 	e.Apps = make(map[string]App)
-	e.configuration = make(map[string]interface{})
+	e.configuration = make(Configuration)
 
 	// Set location as usual
 	e.SetLocation(l)
