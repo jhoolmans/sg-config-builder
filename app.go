@@ -7,5 +7,5 @@ configuration specific for a context.
 type App struct {
 	location      Location
 	LocationRef   string `json:"location"`
-	Configuration Configuration
+	Configuration map[string]interface{}
 }
