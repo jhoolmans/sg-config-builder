@@ -12,7 +12,7 @@ type Engine struct {
 	name          string
 	location      Location
 	LocationRef   string `json:"location"`
-	Apps          map[string]interface{}
+	Apps          map[string]App
 	configuration map[string]interface{}
 }
 
@@ -30,7 +30,7 @@ func NewEngine(l *Location) Engine {
 }
 
 func (e *Engine) Init() {
-	e.Apps = make(map[string]interface{})
+	e.Apps = make(map[string]App)
 	e.configuration = make(map[string]interface{})
 }
 
@@ -73,7 +73,10 @@ func (e *Engine) UnmarshalJSON(b []byte) error {
 	}
 
 	if val, ok := data["apps"]; ok {
-		e.Apps = val.(map[string]interface{})
+		// check to see if value is an empty map
+		if len(val.(map[string]interface{})) != 0 {
+			e.Apps = val.(map[string]App)
+		}
 		delete(data, "apps")
 	}
 	if val, ok := data["location"]; ok {
