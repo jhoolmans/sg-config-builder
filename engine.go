@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 )
 
 /*Engine represents a dcc application with shotgun configurations.
@@ -80,7 +81,33 @@ func (e *Engine) UnmarshalJSON(b []byte) error {
 		delete(data, "apps")
 	}
 	if val, ok := data["location"]; ok {
-		e.LocationRef = val.(string)
+		switch v := val.(type) {
+		default:
+			log.Printf("unexpected type %T", v)
+		case string:
+			// Reference string to a location
+			e.LocationRef = val.(string)
+		case map[string]interface{}:
+			// Actual location information
+			// unmarshal into a location object
+			loc := Location{
+				refName: e.name,
+			}
+			data := val.(map[string]interface{})
+			if keyValue, ok := data["type"]; ok {
+				loc.LocationType = keyValue.(string)
+			}
+			if keyValue, ok := data["name"]; ok {
+				loc.LocationName = keyValue.(string)
+			}
+			if keyValue, ok := data["version"]; ok {
+				loc.Version = keyValue.(string)
+			}
+			if keyValue, ok := data["path"]; ok {
+				loc.Path = keyValue.(string)
+			}
+			e.location = loc
+		}
 		delete(data, "location")
 	}
 	for k, v := range data {

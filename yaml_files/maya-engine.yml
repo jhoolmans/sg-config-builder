@@ -1,5 +1,8 @@
 apps: {}
-location: "@locations.engines.tk-maya.location"
+location:   
+  type: app_store
+  name: tk-maya
+  version: v0.8.3
 menu_favourites: []
 run_at_startup:
 - {app_instance: tk-multi-shotgunpanel, name: ''}

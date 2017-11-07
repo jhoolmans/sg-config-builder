@@ -11,7 +11,7 @@ several valid types to choose from, such as git, git_branch, app_store,
 dev etc.*/
 type Location struct {
 	refName      string
-	Version      string
+	Version      string `json:"version,omitempty"`
 	LocationType string `json:"type"`
 	LocationName string `json:"name,omitempty"`
 	Path         string `json:"path,omitempty"`
